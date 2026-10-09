@@ -1,12 +1,11 @@
 # stackxai
 
-[![CI](https://github.com/YOUR-USERNAME/stackxai/actions/workflows/ci.yml/badge.svg)](https://github.com/YOUR-USERNAME/stackxai/actions/workflows/ci.yml)
+[![CI](https://github.com/Melch1o/stackxai/actions/workflows/ci.yml/badge.svg)](https://github.com/Melch1o/stackxai/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 Reproducible evaluation of a **two-stage stacking ensemble** with built-in
 **explainability** for tabular medical data. It is a small, tested extract of the
-research pipeline developed for a PhD thesis on hybrid interpretable diagnostic
-decision-support systems (Wisconsin Breast Cancer Dataset).
+research pipeline.
 
 ## What it does
 
@@ -20,9 +19,9 @@ decision-support systems (Wisconsin Breast Cancer Dataset).
 ## Installation
 
 ```bash
-git clone https://github.com/YOUR-USERNAME/stackxai.git
+git clone https://github.com/Melch1o/stackxai.git
 cd stackxai
-python -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate
+python -m venv .venv && source .venv/bin/activate   (Windows: .venv\Scripts\activate)
 pip install -e ".[dev,explain]"
 ```
 
@@ -35,7 +34,7 @@ Command line:
 ```bash
 stackxai evaluate --cv 5 --seed 42 --output results/evaluation.json
 stackxai explain --top 10
-stackxai evaluate --csv my_data.csv --target label     # any numeric tabular dataset
+stackxai evaluate --csv my_data.csv --target label     
 ```
 
 Python API:
@@ -51,8 +50,8 @@ print(explain_global(model, X, y).head())
 ## Development
 
 ```bash
-ruff check . && ruff format --check .   # lint and formatting
-pytest --cov                            # tests with coverage
+ruff check . && ruff format --check .   
+pytest --cov                            
 ```
 
 Continuous integration (`.github/workflows/ci.yml`) runs lint, tests on Python 3.10-3.12
