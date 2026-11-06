@@ -58,12 +58,32 @@ Continuous integration (`.github/workflows/ci.yml`) runs lint, tests on Python 3
 with a 90 % coverage gate, builds the package and, for tags such as `v0.1.0`, publishes a
 GitHub release with the built artifacts.
 
+## Docker
+
+```bash
+docker build --target runtime -t stackxai:local .
+docker run --rm stackxai:local evaluate --cv 5 --seed 42
+docker run --rm -v "$PWD/results:/work/results" stackxai:local evaluate --output results/evaluation.json
+```
+
+Exact dependency versions used by the image are pinned in `constraints.txt`. The Dockerfile has a
+`test` target (lint + pytest) and a `runtime` target (non-root CLI image).
+Build with `--build-arg EXTRAS="[explain]"` to add SHAP.
+
+## Jenkins pipeline
+
+The `Jenkinsfile` runs lint, unit tests, builds the Docker image, smoke-tests it
+and, on request, pushes it to Docker Hub and runs it as a Kubernetes Job (`k8s/job.yaml`).
+A local Jenkins with Docker access can be started with `docker compose -f jenkins/docker-compose.yml up -d --build`.
+
 ## Project layout
 
 ```
 src/stackxai/   data.py, fuzzy_knn.py, models.py, evaluate.py, explain.py, cli.py
 tests/          pytest suite (data, models, evaluation, explanations, CLI)
 .github/        CI/CD workflow, issue and pull request templates
+Dockerfile      multi-stage image (test / runtime);  constraints.txt: pinned versions
+Jenkinsfile     Jenkins CI pipeline;  jenkins/: Jenkins in Docker;  k8s/: Kubernetes Job
 ```
 
 ## Reproducibility

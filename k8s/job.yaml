@@ -1,0 +1,31 @@
+# One-off evaluation run. stackxai is a CLI/batch tool, so a Job (not a Deployment) fits.
+# IMAGE_PLACEHOLDER is replaced by the Jenkins pipeline.
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: stackxai-evaluate
+  labels:
+    app: stackxai
+spec:
+  backoffLimit: 0
+  ttlSecondsAfterFinished: 3600
+  template:
+    metadata:
+      labels:
+        app: stackxai
+    spec:
+      restartPolicy: Never
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+      containers:
+        - name: stackxai
+          image: IMAGE_PLACEHOLDER
+          imagePullPolicy: IfNotPresent
+          args: ["evaluate", "--cv", "5", "--seed", "42"]
+          resources:
+            requests:
+              cpu: 250m
+              memory: 512Mi
+            limits:
+              memory: 1Gi
