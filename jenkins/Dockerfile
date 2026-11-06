@@ -20,4 +20,4 @@ RUN apt-get update \
 
 USER jenkins
 RUN jenkins-plugin-cli --plugins git github workflow-aggregator pipeline-stage-view \
-    credentials-binding junit timestamps
+    credentials-binding junit timestamper
